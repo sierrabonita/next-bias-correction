@@ -1588,6 +1588,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.90.9":
+  version: 5.90.9
+  resolution: "@tanstack/query-core@npm:5.90.9"
+  checksum: 10c0/d3759529c714658a492e860365452db165f673f9a777c57339072231f90554628798deaadc9fd8b115b028c1dcd3b0fe3fd8d8a2ab25f799d853e2fd020b5734
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.90.9":
+  version: 5.90.9
+  resolution: "@tanstack/react-query@npm:5.90.9"
+  dependencies:
+    "@tanstack/query-core": "npm:5.90.9"
+  peerDependencies:
+    react: ^18 || ^19
+  checksum: 10c0/3cf3e5b49580a58966db6cca9b35674af62b9322c4b9f388ee0074fe5d0f05d0fbcc83b345f2d84040cab284b02cfcf5f45bb8f79bf4ae85853f66313e0a7d6e
+  languageName: node
+  linkType: hard
+
 "@tybys/wasm-util@npm:^0.10.1":
   version: 0.10.1
   resolution: "@tybys/wasm-util@npm:0.10.1"
@@ -3185,6 +3203,7 @@ __metadata:
     "@chakra-ui/react": "npm:^3.29.0"
     "@emotion/react": "npm:^11.14.0"
     "@tailwindcss/postcss": "npm:^4"
+    "@tanstack/react-query": "npm:^5.90.9"
     "@types/node": "npm:^20"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
