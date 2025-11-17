@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { Provider as ChakraProvider } from "@/lib/chakra-ui/provider";
-import { Provider as JotaiProvider } from "@/lib/jotai/provider";
-import { Provider as QueryClientProvider } from "@/lib/react-query/provider";
+import AppProviders from "@/app/_components/client/AppProviders";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,12 +13,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`antialiased`}>
-        <ChakraProvider>
-          <QueryClientProvider>
-            <JotaiProvider>{children}</JotaiProvider>
-          </QueryClientProvider>
-        </ChakraProvider>
+      <body>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );
