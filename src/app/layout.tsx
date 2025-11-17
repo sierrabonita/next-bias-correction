@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Provider as ChakraProvider } from "@/lib/chakra-ui/provider";
+import { Provider as JotaiProvider } from "@/lib/jotai/provider";
 import { Provider as QueryClientProvider } from "@/lib/react-query/provider";
 
 export const metadata: Metadata = {
@@ -16,7 +17,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`antialiased`}>
         <ChakraProvider>
-          <QueryClientProvider>{children}</QueryClientProvider>
+          <QueryClientProvider>
+            <JotaiProvider>{children}</JotaiProvider>
+          </QueryClientProvider>
         </ChakraProvider>
       </body>
     </html>
