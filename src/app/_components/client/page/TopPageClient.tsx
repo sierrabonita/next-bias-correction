@@ -1,9 +1,17 @@
 "use client";
 
 import { Box, Center, Heading, Stack } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { LoginForm } from "@/app/_components/client/login/LoginForm";
 
 export const TopPageClient = () => {
+  const router = useRouter();
+
+  const handleSubmit = () => {
+    console.log("handleSubmit");
+    router.push("/skills");
+  };
+
   return (
     <Center minH="100vh">
       <Box
@@ -18,7 +26,7 @@ export const TopPageClient = () => {
           <Heading fontSize="4xl" fontWeight="bold">
             {"Skill Tracker"}
           </Heading>
-          <LoginForm />
+          <LoginForm onSubmit={handleSubmit} />
         </Stack>
       </Box>
     </Center>
