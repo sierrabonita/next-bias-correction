@@ -1,18 +1,26 @@
 "use client";
 
 import { Box, Button, Field, Fieldset, Input } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import loginSchema from "@/app/schema/loginSchema";
+import { PasswordInput } from "@/lib/chakra-ui/components/ui/password-input";
 
 type Props = {
   onSubmit: () => void;
 };
 
 export const LoginForm = ({ onSubmit }: Props) => {
-  const { handleSubmit, register } = useForm({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
+    resolver: zodResolver(loginSchema),
   });
 
   return (
@@ -22,11 +30,13 @@ export const LoginForm = ({ onSubmit }: Props) => {
           <Field.Root>
             <Field.Label>Email address</Field.Label>
             <Input type="email" bg="white" {...register("email")} />
+            <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
           </Field.Root>
 
           <Field.Root>
             <Field.Label>Password</Field.Label>
-            <Input type="password" bg="white" {...register("password")} />
+            <PasswordInput bg="white" {...register("password")} />
+            <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
           </Field.Root>
         </Fieldset.Content>
 
