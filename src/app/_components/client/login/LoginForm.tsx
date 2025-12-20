@@ -8,7 +8,12 @@ type Props = {
 };
 
 export const LoginForm = ({ onSubmit }: Props) => {
-  const { handleSubmit } = useForm();
+  const { handleSubmit, register } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
@@ -16,12 +21,12 @@ export const LoginForm = ({ onSubmit }: Props) => {
         <Fieldset.Content>
           <Field.Root>
             <Field.Label>Email address</Field.Label>
-            <Input name="email" type="email" bg="white" />
+            <Input type="email" bg="white" {...register("email")} />
           </Field.Root>
 
           <Field.Root>
             <Field.Label>Password</Field.Label>
-            <Input name="password" type="password" bg="white" />
+            <Input type="password" bg="white" {...register("password")} />
           </Field.Root>
         </Fieldset.Content>
 
