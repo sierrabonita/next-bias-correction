@@ -2,7 +2,7 @@
 
 import { Box, Center, Heading, Stack } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { LoginForm } from "@/app/_components/client/login/LoginForm";
+import { LoginForm } from "@/app/_components/login/LoginForm";
 
 export const TopPageClient = () => {
   const router = useRouter();
