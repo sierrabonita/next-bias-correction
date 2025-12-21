@@ -1,4 +1,4 @@
-import { TopPageClient } from "@/app/_components/page/TopPageClient";
+import { TopPageClient } from "@/app/_components/TopPageClient";
 
 const TopPage = () => {
   return <TopPageClient />;
