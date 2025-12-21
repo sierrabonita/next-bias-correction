@@ -3,8 +3,8 @@
 import { Box, Button, Field, Fieldset, Input } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import loginSchema from "@/app/schema/loginSchema";
 import { PasswordInput } from "@/lib/chakra-ui/components/ui/password-input";
+import loginSchema from "@/schema/loginSchema";
 
 type Props = {
   onSubmit: () => void;
