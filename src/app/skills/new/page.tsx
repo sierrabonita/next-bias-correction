@@ -1,5 +1,7 @@
-import SkillNewForm from "@/app/skills/new/_components/SkillNewForm";
+import { SkillNewForm } from "@/app/skills/new/_components/SkillNewForm";
 
-export default function SkillNewPage() {
+const SkillNewPage = () => {
   return <SkillNewForm />;
-}
+};
+
+export default SkillNewPage;

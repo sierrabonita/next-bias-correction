@@ -11,7 +11,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export function Provider(props: Props) {
+export const Provider = (props: Props) => {
   const { children } = props;
   return (
     <ChakraProvider value={defaultSystem}>
@@ -19,4 +19,4 @@ export function Provider(props: Props) {
       {/* <ColorModeProvider {...props} /> */}
     </ChakraProvider>
   );
-}
+};

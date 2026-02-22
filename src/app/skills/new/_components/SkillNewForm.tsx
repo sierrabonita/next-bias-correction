@@ -36,7 +36,7 @@ const skillFormSchema = z.object({
 
 type SkillFormValues = z.infer<typeof skillFormSchema>;
 
-export default function SkillNewForm() {
+export const SkillNewForm = () => {
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>();
 
@@ -152,4 +152,4 @@ export default function SkillNewForm() {
       </Box>
     </Box>
   );
-}
+};

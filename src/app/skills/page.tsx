@@ -34,9 +34,11 @@ const dummySkills: Skill[] = [
   },
 ];
 
-export default async function SkillPage() {
+const SkillPage = async () => {
   // 今はダミーデータ。後で DB / API に差し替え前提。
   const skills = dummySkills;
 
   return <SkillsPageClient skills={skills} />;
-}
+};
+
+export default SkillPage;

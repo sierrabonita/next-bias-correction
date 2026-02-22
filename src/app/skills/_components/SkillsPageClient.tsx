@@ -22,7 +22,7 @@ const levelColorScheme: Record<Skill["level"], string> = {
   advanced: "red",
 };
 
-export function SkillsPageClient({ skills }: SkillsPageClientProps) {
+export const SkillsPageClient = ({ skills }: SkillsPageClientProps) => {
   return (
     <Box px={8} py={6}>
       <Flex justify="space-between" align="center" mb={6}>
@@ -66,4 +66,4 @@ export function SkillsPageClient({ skills }: SkillsPageClientProps) {
       </Stack>
     </Box>
   );
-}
+};
