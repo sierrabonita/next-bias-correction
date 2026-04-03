@@ -57,7 +57,7 @@ export const SkillNewForm = () => {
     setServerError(null);
 
     try {
-      const res = await fetch("/api/skils", {
+      const res = await fetch("/api/skills", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
