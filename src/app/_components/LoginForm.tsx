@@ -2,15 +2,12 @@
 
 import { Box, Button, Field, Fieldset, Input } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { PasswordInput } from "@/lib/chakra-ui/components/ui/password-input";
 import loginSchema from "@/schema/loginSchema";
 
-type Props = {
-  onSubmit: () => void;
-};
-
-export const LoginForm = ({ onSubmit }: Props) => {
+export const LoginForm = () => {
   const {
     handleSubmit,
     register,
@@ -23,17 +20,23 @@ export const LoginForm = ({ onSubmit }: Props) => {
     resolver: zodResolver(loginSchema),
   });
 
+  const router = useRouter();
+
+  const onSubmit = () => {
+    router.push("/skills");
+  };
+
   return (
     <Box as="form" onSubmit={handleSubmit(onSubmit)}>
       <Fieldset.Root size="lg" maxW="md">
         <Fieldset.Content>
-          <Field.Root>
+          <Field.Root invalid={!!errors.email}>
             <Field.Label>Email address</Field.Label>
             <Input type="email" bg="white" {...register("email")} />
             <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root>
+          <Field.Root invalid={!!errors.password}>
             <Field.Label>Password</Field.Label>
             <PasswordInput bg="white" {...register("password")} />
             <Field.ErrorText>{errors.password?.message}</Field.ErrorText>

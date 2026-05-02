@@ -1,18 +1,15 @@
+// TODO: ライブラリを直接呼ぶのは `@/lib/` 配下にする予定だが当面はこのまま呼ぶ
+import { Box, Flex, Stack } from "@chakra-ui/react";
 import type { Metadata } from "next";
-import { SkillsPageClient } from "@/app/skills/_components/SkillsPageClient";
+import type { Skill } from "@/types/skill";
+import SkillsContent from "./_components/SkillsContent";
+import SkillsHeader from "./_components/SkillsHeader";
 
 export const metadata: Metadata = {
   title: "Skills | SkillTracker",
 };
 
-export type Skill = {
-  id: string;
-  name: string;
-  level: "beginner" | "intermediate" | "advanced";
-  description?: string | null;
-};
-
-// TODO: 後で Prisma or fetch("/api/skills") に差し替え
+// TODO: 後で差し替え
 const dummySkills: Skill[] = [
   {
     id: "react",
@@ -35,10 +32,16 @@ const dummySkills: Skill[] = [
 ];
 
 const SkillPage = async () => {
-  // 今はダミーデータ。後で DB / API に差し替え前提。
-  const skills = dummySkills;
-
-  return <SkillsPageClient skills={skills} />;
+  return (
+    <Box px={8} py={6}>
+      <Flex justify="space-between" align="center" mb={6}>
+        <SkillsHeader />
+      </Flex>
+      <Stack gap={4}>
+        <SkillsContent skills={dummySkills} />
+      </Stack>
+    </Box>
+  );
 };
 
 export default SkillPage;
