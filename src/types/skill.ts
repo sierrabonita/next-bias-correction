@@ -1,6 +1,6 @@
 export type Skill = {
   id: string;
   name: string;
-  level: "beginner" | "intermediate" | "advanced";
+  layer: "Frontend" | "Backend" | "Infrastructure" | "Other";
   description?: string | null;
 };

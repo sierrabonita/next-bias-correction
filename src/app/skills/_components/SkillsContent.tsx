@@ -7,10 +7,11 @@ type Props = {
 
 const SkillsContent = (props: Props) => {
   const { skills } = props;
-  const levelColorScheme: Record<Skill["level"], string> = {
-    beginner: "green",
-    intermediate: "yellow",
-    advanced: "red",
+  const layerColorPalette: Record<Skill["layer"], string> = {
+    Frontend: "green",
+    Backend: "blue",
+    Infrastructure: "purple",
+    Other: "gray",
   };
 
   return (
@@ -35,10 +36,10 @@ const SkillsContent = (props: Props) => {
               )}
             </Box>
             <Badge
-              colorScheme={levelColorScheme[skill.level]}
+              colorPalette={layerColorPalette[skill.layer]}
               alignSelf="flex-start"
             >
-              {skill.level}
+              {skill.layer}
             </Badge>
           </Flex>
         </Box>

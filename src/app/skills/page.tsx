@@ -14,19 +14,19 @@ const dummySkills: Skill[] = [
   {
     id: "react",
     name: "React",
-    level: "advanced",
+    layer: "Frontend",
     description: "SPA構築・Hooks・パフォーマンス最適化など。",
   },
   {
     id: "nextjs",
     name: "Next.js",
-    level: "intermediate",
+    layer: "Frontend",
     description: "App Router / SSR / SSG / ルーティング設計。",
   },
   {
-    id: "backend",
-    name: "Backend (NestJS)",
-    level: "beginner",
+    id: "nestjs",
+    name: "NestJS",
+    layer: "Backend",
     description: "認証・CRUD API・Prismaを用いたAPI実装。",
   },
 ];
