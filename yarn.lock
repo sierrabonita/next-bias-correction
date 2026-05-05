@@ -3330,6 +3330,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nanoid@npm:^5.1.11":
+  version: 5.1.11
+  resolution: "nanoid@npm:5.1.11"
+  bin:
+    nanoid: bin/nanoid.js
+  checksum: 10c0/91580d18c29263ac0e871734f0d86e7f906f523f974d3c30fc65354ccf387ccffd606c2a6c28acc2977a3950146347e790ce9e3f514133a48995af5ccdb308ce
+  languageName: node
+  linkType: hard
+
 "next-bias-correction@workspace:.":
   version: 0.0.0-use.local
   resolution: "next-bias-correction@workspace:."
@@ -3348,6 +3357,7 @@ __metadata:
     baseline-browser-mapping: "npm:^2.9.14"
     cspell: "npm:^9.3.1"
     jotai: "npm:^2.15.1"
+    nanoid: "npm:^5.1.11"
     next: "npm:16.0.3"
     next-themes: "npm:^0.4.6"
     react: "npm:19.2.0"
