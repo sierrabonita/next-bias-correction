@@ -128,6 +128,7 @@ export const PasswordStrengthMeter = React.forwardRef<
       <HStack width="full" {...rest}>
         {Array.from({ length: max }).map((_, index) => (
           <Box
+            // biome-ignore lint/suspicious/noArrayIndexKey: static array with no reordering
             key={index}
             height="1"
             flex="1"

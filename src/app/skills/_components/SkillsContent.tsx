@@ -10,6 +10,7 @@ const SkillsContent = (props: Props) => {
   const { skills } = props;
   const layerColorPalette: Record<Skill["layer"], string> = {
     Frontend: "green",
+    NativeApp: "orange",
     Backend: "blue",
     Infrastructure: "purple",
     Other: "gray",
