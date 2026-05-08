@@ -1,7 +1,7 @@
 import { HStack } from "@chakra-ui/react";
 import { nanoid } from "nanoid";
 import { useMemo } from "react";
-import IconStar from "@/app/ui/icons/IconStar";
+import IconStar from "@/components/icons/IconStar";
 
 type Props = {
   rating: number;
