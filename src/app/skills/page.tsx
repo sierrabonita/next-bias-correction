@@ -1,10 +1,10 @@
 // TODO: ライブラリを直接呼ぶのは `@/lib/` 配下にする予定だが当面はこのまま呼ぶ
 import { Box, Flex, Stack } from "@chakra-ui/react";
 import type { Metadata } from "next";
-import type { Skill } from "@/types/skill";
+import { fetchSkills } from "@/services/skillService";
+// import type { Skill } from "@/types/skill";
 import SkillsContent from "./_components/SkillsContent";
 import SkillsHeader from "./_components/SkillsHeader";
-import { fetchSkills } from "@/services/skillService";
 
 export const metadata: Metadata = {
   title: "Skills | SkillTracker",
