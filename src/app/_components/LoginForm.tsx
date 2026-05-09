@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { PasswordInput } from "@/lib/chakra-ui/components/ui/password-input";
-import loginSchema from "@/schema/loginSchema";
+import loginSchema from "@/schemas/loginSchema";
 
 export const LoginForm = () => {
   const {

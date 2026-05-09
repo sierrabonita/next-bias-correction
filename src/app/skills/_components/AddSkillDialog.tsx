@@ -20,24 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
-
-// TODO: 外部ファイル化
-const skillSchema = z.object({
-  name: z
-    .string()
-    .min(1, "名前を入力してください")
-    .max(20, "20文字以内で入力してください"),
-  rating: z.number().min(1).max(5),
-  category: z.string().min(1, "カテゴリを選択してください"),
-  description: z
-    .string()
-    .max(100, "説明は100文字以内で入力してください")
-    .optional()
-    .or(z.literal("")),
-});
-
-type SkillFormValues = z.infer<typeof skillSchema>;
+import { type CreateSkillDto, skillSchema } from "@/schemas/skillSchema";
 
 // TODO: 外部ファイル化
 const categories = createListCollection({
@@ -62,12 +45,12 @@ export const AddSkillDialog = ({ open, onOpenChange }: Props) => {
     control,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<SkillFormValues>({
+  } = useForm<CreateSkillDto>({
     resolver: zodResolver(skillSchema),
     defaultValues: { name: "", rating: 3, category: "" },
   });
 
-  const onSubmit = async (data: SkillFormValues) => {
+  const onSubmit = async (data: CreateSkillDto) => {
     console.log("バリデーション済みデータ:", data);
     // await createSkill(data);
 
