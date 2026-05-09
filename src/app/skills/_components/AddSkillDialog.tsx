@@ -28,7 +28,7 @@ const skillSchema = z.object({
     .string()
     .min(1, "名前を入力してください")
     .max(20, "20文字以内で入力してください"),
-  level: z.number().min(1).max(5),
+  rating: z.number().min(1).max(5),
   category: z.string().min(1, "カテゴリを選択してください"),
   description: z
     .string()
@@ -64,7 +64,7 @@ export const AddSkillDialog = ({ open, onOpenChange }: Props) => {
     formState: { errors, isSubmitting },
   } = useForm<SkillFormValues>({
     resolver: zodResolver(skillSchema),
-    defaultValues: { name: "", level: 3, category: "" },
+    defaultValues: { name: "", rating: 3, category: "" },
   });
 
   const onSubmit = async (data: SkillFormValues) => {
@@ -94,11 +94,11 @@ export const AddSkillDialog = ({ open, onOpenChange }: Props) => {
                   <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
                 </Field.Root>
 
-                <Field.Root invalid={!!errors.level}>
+                <Field.Root invalid={!!errors.rating}>
                   <Field.Label>5段階評価</Field.Label>
                   <Controller
                     control={control}
-                    name="level"
+                    name="rating"
                     render={({ field }) => (
                       <RatingGroup.Root
                         value={field.value}
