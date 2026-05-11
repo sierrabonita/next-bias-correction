@@ -1,15 +1,8 @@
-export const fetchSkills = async () => {
-  const baseUrl = process.env.API_BASE_URL;
+import { fetchAllSkills } from "@/repositories/skillRepository";
 
-  if (!baseUrl) {
-    throw new Error('API_BASE_URL が定義されていません');
-  }
+// TODO: エラーハンドリングの実装
+export const getAllSkills = async () => {
+  const skills = await fetchAllSkills();
 
-  const res = await fetch(`${baseUrl}/skills`, {
-    next: { revalidate: 3600 },
-  });
-
-  if (!res.ok) throw new Error("skills データの取得に失敗しました");
-
-  return res.json();
+  return skills;
 };

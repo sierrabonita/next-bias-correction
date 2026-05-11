@@ -1,7 +1,7 @@
 // TODO: ライブラリを直接呼ぶのは `@/lib/` 配下にする予定だが当面はこのまま呼ぶ
 import { Box, Flex, Stack } from "@chakra-ui/react";
 import type { Metadata } from "next";
-import { fetchSkills } from "@/services/skillService";
+import { getAllSkills } from "@/services/skillService";
 // import type { Skill } from "@/types/skill";
 import SkillsContent from "./_components/SkillsContent";
 import SkillsHeader from "./_components/SkillsHeader";
@@ -34,8 +34,9 @@ export const metadata: Metadata = {
 //   },
 // ];
 
+// TODO: データ未取得時の表示
 const SkillPage = async () => {
-  const skills = await fetchSkills();
+  const skills = await getAllSkills();
 
   return (
     <Box px={8} py={6}>
