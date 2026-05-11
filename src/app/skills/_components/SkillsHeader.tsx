@@ -1,5 +1,5 @@
 import { Heading } from "@chakra-ui/react";
-import { AddSkillButton } from "@/app/skills/_components/AddSkillButton";
+import { CreateSkillButton } from "@/app/skills/_components/CreateSkillButton";
 
 const SkillsHeader = () => {
   return (
@@ -7,7 +7,7 @@ const SkillsHeader = () => {
       <Heading as="h1" size="lg">
         Skills
       </Heading>
-      <AddSkillButton />
+      <CreateSkillButton />
     </>
   );
 };

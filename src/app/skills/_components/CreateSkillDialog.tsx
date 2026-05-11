@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { createSkillAction } from "@/actions/skillAction";
 import { type CreateSkillDto, skillSchema } from "@/schemas/skillSchema";
 
 // TODO: 外部ファイル化
@@ -38,7 +39,7 @@ type Props = {
   onOpenChange: (details: { open: boolean }) => void;
 };
 
-export const AddSkillDialog = ({ open, onOpenChange }: Props) => {
+export const CreateSkillDialog = ({ open, onOpenChange }: Props) => {
   const {
     register,
     handleSubmit,
@@ -47,14 +48,14 @@ export const AddSkillDialog = ({ open, onOpenChange }: Props) => {
     formState: { errors, isSubmitting },
   } = useForm<CreateSkillDto>({
     resolver: zodResolver(skillSchema),
-    defaultValues: { name: "", rating: 3, category: "" },
+    defaultValues: { name: "", rating: 3, layer: "" },
   });
 
   const onSubmit = async (data: CreateSkillDto) => {
-    console.log("バリデーション済みデータ:", data);
-    // await createSkill(data);
+    await createSkillAction(data);
 
     onOpenChange({ open: false });
+
     // 送信後にフォームをクリア
     reset();
   };
@@ -95,11 +96,11 @@ export const AddSkillDialog = ({ open, onOpenChange }: Props) => {
                   />
                 </Field.Root>
 
-                <Field.Root invalid={!!errors.category}>
+                <Field.Root invalid={!!errors.layer}>
                   <Field.Label>カテゴリ</Field.Label>
                   <Controller
                     control={control}
-                    name="category"
+                    name="layer"
                     render={({ field }) => (
                       <Select.Root
                         name={field.name}
@@ -134,7 +135,7 @@ export const AddSkillDialog = ({ open, onOpenChange }: Props) => {
                       </Select.Root>
                     )}
                   />
-                  <Field.ErrorText>{errors.category?.message}</Field.ErrorText>
+                  <Field.ErrorText>{errors.layer?.message}</Field.ErrorText>
                 </Field.Root>
 
                 <Field.Root invalid={!!errors.name}>
