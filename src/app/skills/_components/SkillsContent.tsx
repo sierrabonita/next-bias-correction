@@ -1,4 +1,5 @@
-import { Badge, Box, Flex, Heading, HStack, Text } from "@chakra-ui/react";
+import { Badge, Box, Heading, HStack, Stack, Text } from "@chakra-ui/react";
+import { SkillMenu } from "@/app/skills/_components/SkillMenu";
 import type { Skill } from "@/types/skill";
 import StarRating from "./StarRating";
 
@@ -26,9 +27,15 @@ const SkillsContent = (props: Props) => {
           p={4}
           _hover={{ shadow: "sm" }}
         >
-          <Flex justify="space-between" align="flex-start" gap={4}>
-            <Box>
-              <HStack mb={1} gap={3}>
+          <HStack justify="space-between">
+            <Stack gap={1}>
+              <Badge
+                colorPalette={layerColorPalette[skill.layer]}
+                alignSelf="flex-start"
+              >
+                {skill.layer}
+              </Badge>
+              <HStack gap={2}>
                 <Heading as="h2" size="md">
                   {skill.name}
                 </Heading>
@@ -39,14 +46,9 @@ const SkillsContent = (props: Props) => {
                   {skill.description}
                 </Text>
               )}
-            </Box>
-            <Badge
-              colorPalette={layerColorPalette[skill.layer]}
-              alignSelf="flex-start"
-            >
-              {skill.layer}
-            </Badge>
-          </Flex>
+            </Stack>
+            <SkillMenu id={skill.id} />
+          </HStack>
         </Box>
       ))}
       {skills.length === 0 && (

@@ -36,3 +36,13 @@ export const createSkillRepo = async (data: CreateSkillDto) => {
 
   return res.json();
 };
+
+export const deleteSkillRepo = async (id: string) => {
+  const res = await fetch(`${getBaseUrl()}/skills/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error("Infrastructure Error");
+  }
+};
