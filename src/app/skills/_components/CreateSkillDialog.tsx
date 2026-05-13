@@ -3,14 +3,7 @@
 import {
   Button,
   createListCollection,
-  DialogActionTrigger,
-  DialogBackdrop,
-  DialogBody,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogRoot,
-  DialogTitle,
+  Dialog,
   Field,
   Input,
   Portal,
@@ -61,105 +54,111 @@ export const CreateSkillDialog = ({ open, onOpenChange }: Props) => {
   };
 
   return (
-    <DialogRoot open={open} onOpenChange={onOpenChange} placement="center">
-      <DialogBackdrop />
+    <Dialog.Root open={open} onOpenChange={onOpenChange} placement="center">
       <Portal>
-        <DialogContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <DialogHeader>
-              <DialogTitle>新規スキル登録</DialogTitle>
-            </DialogHeader>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Dialog.Header>
+                <Dialog.Title>新規スキル登録</Dialog.Title>
+              </Dialog.Header>
 
-            <DialogBody>
-              <Stack gap="5">
-                <Field.Root invalid={!!errors.name}>
-                  <Field.Label>スキル名</Field.Label>
-                  <Input {...register("name")} placeholder="例: Next.js" />
-                  <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-                </Field.Root>
+              <Dialog.Body>
+                <Stack gap="5">
+                  <Field.Root invalid={!!errors.name}>
+                    <Field.Label>スキル名</Field.Label>
+                    <Input {...register("name")} placeholder="例: Next.js" />
+                    <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+                  </Field.Root>
 
-                <Field.Root invalid={!!errors.rating}>
-                  <Field.Label>5段階評価</Field.Label>
-                  <Controller
-                    control={control}
-                    name="rating"
-                    render={({ field }) => (
-                      <RatingGroup.Root
-                        value={field.value}
-                        onValueChange={(e) => field.onChange(e.value)}
-                        count={5}
-                      >
-                        <RatingGroup.HiddenInput />
-                        <RatingGroup.Control />
-                      </RatingGroup.Root>
-                    )}
-                  />
-                </Field.Root>
+                  <Field.Root invalid={!!errors.rating}>
+                    <Field.Label>5段階評価</Field.Label>
+                    <Controller
+                      control={control}
+                      name="rating"
+                      render={({ field }) => (
+                        <RatingGroup.Root
+                          value={field.value}
+                          onValueChange={(e) => field.onChange(e.value)}
+                          count={5}
+                        >
+                          <RatingGroup.HiddenInput />
+                          <RatingGroup.Control />
+                        </RatingGroup.Root>
+                      )}
+                    />
+                  </Field.Root>
 
-                <Field.Root invalid={!!errors.layer}>
-                  <Field.Label>カテゴリ</Field.Label>
-                  <Controller
-                    control={control}
-                    name="layer"
-                    render={({ field }) => (
-                      <Select.Root
-                        name={field.name}
-                        value={[field.value]}
-                        onValueChange={(e) => field.onChange(e.value[0])}
-                        collection={categories}
-                      >
-                        <Select.HiddenSelect />
-                        <Select.Control>
-                          <Select.Trigger>
-                            <Select.ValueText placeholder="カテゴリを選択" />
-                          </Select.Trigger>
-                          <Select.IndicatorGroup>
-                            <Select.Indicator />
-                          </Select.IndicatorGroup>
-                        </Select.Control>
-                        <Portal>
-                          <Select.Positioner>
-                            <Select.Content>
-                              {categories.items.map((category) => (
-                                <Select.Item
-                                  item={category}
-                                  key={category.value}
-                                >
-                                  {category.label}
-                                  <Select.ItemIndicator />
-                                </Select.Item>
-                              ))}
-                            </Select.Content>
-                          </Select.Positioner>
-                        </Portal>
-                      </Select.Root>
-                    )}
-                  />
-                  <Field.ErrorText>{errors.layer?.message}</Field.ErrorText>
-                </Field.Root>
+                  <Field.Root invalid={!!errors.layer}>
+                    <Field.Label>カテゴリ</Field.Label>
+                    <Controller
+                      control={control}
+                      name="layer"
+                      render={({ field }) => (
+                        <Select.Root
+                          name={field.name}
+                          value={[field.value]}
+                          onValueChange={(e) => field.onChange(e.value[0])}
+                          collection={categories}
+                        >
+                          <Select.HiddenSelect />
+                          <Select.Control>
+                            <Select.Trigger>
+                              <Select.ValueText placeholder="カテゴリを選択" />
+                            </Select.Trigger>
+                            <Select.IndicatorGroup>
+                              <Select.Indicator />
+                            </Select.IndicatorGroup>
+                          </Select.Control>
+                          <Portal>
+                            <Select.Positioner>
+                              <Select.Content>
+                                {categories.items.map((category) => (
+                                  <Select.Item
+                                    item={category}
+                                    key={category.value}
+                                  >
+                                    {category.label}
+                                    <Select.ItemIndicator />
+                                  </Select.Item>
+                                ))}
+                              </Select.Content>
+                            </Select.Positioner>
+                          </Portal>
+                        </Select.Root>
+                      )}
+                    />
+                    <Field.ErrorText>{errors.layer?.message}</Field.ErrorText>
+                  </Field.Root>
 
-                <Field.Root invalid={!!errors.name}>
-                  <Field.Label>説明</Field.Label>
-                  <Input
-                    {...register("description")}
-                    placeholder="例: Vite, Next.js, ReactNativeの実装基盤"
-                  />
-                  <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
-                </Field.Root>
-              </Stack>
-            </DialogBody>
+                  <Field.Root invalid={!!errors.name}>
+                    <Field.Label>説明</Field.Label>
+                    <Input
+                      {...register("description")}
+                      placeholder="例: Vite, Next.js, ReactNativeの実装基盤"
+                    />
+                    <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+                  </Field.Root>
+                </Stack>
+              </Dialog.Body>
 
-            <DialogFooter>
-              <DialogActionTrigger asChild>
-                <Button variant="outline">キャンセル</Button>
-              </DialogActionTrigger>
-              <Button type="submit" loading={isSubmitting} colorPalette="blue">
-                保存
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
+              <Dialog.Footer>
+                <Dialog.ActionTrigger asChild>
+                  <Button variant="outline">キャンセル</Button>
+                </Dialog.ActionTrigger>
+                <Button
+                  type="submit"
+                  loading={isSubmitting}
+                  colorPalette="blue"
+                >
+                  保存
+                </Button>
+              </Dialog.Footer>
+            </form>
+          </Dialog.Content>
+        </Dialog.Positioner>
       </Portal>
-    </DialogRoot>
+    </Dialog.Root>
   );
 };
