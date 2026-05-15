@@ -3,7 +3,7 @@ import * as z from "zod";
 const PASSWORD_MIN_LENGTH = 8;
 const PASSWORD_MAX_LENGTH = 100;
 
-const loginSchema = z.object({
+export const loginSchema = z.object({
   email: z.email(),
   password: z
     .string()
@@ -18,4 +18,4 @@ const loginSchema = z.object({
     .regex(/[^a-zA-Z0-9]/, "記号を含めてください"),
 });
 
-export default loginSchema;
+export type LoginDto = z.infer<typeof loginSchema>;

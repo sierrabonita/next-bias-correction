@@ -2,10 +2,11 @@
 
 import { Box, Button, Field, Fieldset, Input } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { loginAction } from "@/actions/authAction";
 import { PasswordInput } from "@/lib/chakra-ui/components/ui/password-input";
-import loginSchema from "@/schemas/loginSchema";
+import { type LoginDto, loginSchema } from "@/schemas/loginSchema";
 
 export const LoginForm = () => {
   const {
@@ -20,10 +21,15 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const router = useRouter();
+  // const router = useRouter();
 
-  const onSubmit = () => {
-    router.push("/skills");
+  const onSubmit = async (data: LoginDto) => {
+    const result = await loginAction(data);
+
+    // TODO: エラー時の処理
+    if (result?.error) {
+      return;
+    }
   };
 
   return (
