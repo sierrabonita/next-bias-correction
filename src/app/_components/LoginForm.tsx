@@ -1,10 +1,11 @@
 "use client";
 
-import { Box, Button, Field, Fieldset, Input } from "@chakra-ui/react";
+import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { loginAction } from "@/actions/authAction";
 import { PasswordInput } from "@/lib/chakra-ui/components/ui/password-input";
 import { type LoginDto, loginSchema } from "@/schemas/loginSchema";
 
@@ -21,15 +22,21 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  // const router = useRouter();
+  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = async (data: LoginDto) => {
-    const result = await loginAction(data);
+    const result = await signIn("credentials", {
+      ...data,
+      redirect: false,
+    });
 
-    // TODO: エラー時の処理
     if (result?.error) {
+      setErrorMessage("メールアドレスまたはパスワードが間違っています。");
       return;
     }
+
+    router.push("/skills");
   };
 
   return (
@@ -61,6 +68,7 @@ export const LoginForm = () => {
         >
           Login
         </Button>
+        {errorMessage && <Text color={"red"}>{errorMessage}</Text>}
       </Fieldset.Root>
     </Box>
   );
