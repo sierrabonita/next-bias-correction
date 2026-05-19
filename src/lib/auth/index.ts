@@ -47,12 +47,14 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.accessToken = user.accessToken;
+        token.id = user.id;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.accessToken = token.accessToken as string | undefined;
+        session.user.accessToken = token.accessToken;
+        session.user.id = token.id;
       }
       return session;
     },

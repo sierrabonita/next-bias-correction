@@ -1,7 +1,9 @@
 // TODO: ライブラリを直接呼ぶのは `@/lib/` 配下にする予定だが当面はこのまま呼ぶ
-import { Box, Flex, Stack } from "@chakra-ui/react";
+import { Box, Flex, Stack, Text } from "@chakra-ui/react";
 import type { Metadata } from "next";
-import { getAllSkills } from "@/services/skillService";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
+import { getUserSkillsByIdService } from "@/services/userSkillService";
 import SkillsContent from "./_components/SkillsContent";
 import SkillsHeader from "./_components/SkillsHeader";
 
@@ -9,9 +11,15 @@ export const metadata: Metadata = {
   title: "Skills | SkillTracker",
 };
 
-// TODO: データ未取得時の表示
 const SkillPage = async () => {
-  const skills = await getAllSkills();
+  const session = await getServerSession(authOptions);
+  const id = session?.user?.id;
+
+  let skills = [];
+
+  if (id) {
+    skills = await getUserSkillsByIdService(id);
+  }
 
   return (
     <Box px={8} py={6}>
@@ -19,7 +27,11 @@ const SkillPage = async () => {
         <SkillsHeader />
       </Flex>
       <Stack gap={4}>
-        <SkillsContent skills={skills} />
+        {skills ? (
+          <SkillsContent skills={skills} />
+        ) : (
+          <Text>{"データがありません"}</Text>
+        )}
       </Stack>
     </Box>
   );

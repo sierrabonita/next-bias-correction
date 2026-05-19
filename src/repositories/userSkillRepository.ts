@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
 import { InfrastructureError } from "@/errors/InfrastructureError";
 import { authOptions } from "@/lib/auth";
-import type { CreateSkillDto } from "@/schemas/skillSchema";
 
 const getBaseUrl = () => {
   const baseUrl = process.env.API_BASE_URL;
@@ -18,16 +17,16 @@ const getAuthHeaders = async (): Promise<Record<string, string>> => {
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
-export const createSkillRepo = async (data: CreateSkillDto) => {
+export const getUserSkillsByIdRepo = async (id: string) => {
   const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${getBaseUrl()}/skills`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...authHeaders,
-    },
-    body: JSON.stringify(data),
+  const res = await fetch(`${getBaseUrl()}/users/${id}/skills`, {
+    cache: "no-store",
+    headers: { ...authHeaders },
   });
+
+  if (res.status === 404) {
+    return null;
+  }
 
   if (!res.ok) {
     throw new InfrastructureError(
@@ -37,19 +36,4 @@ export const createSkillRepo = async (data: CreateSkillDto) => {
   }
 
   return res.json();
-};
-
-export const deleteSkillRepo = async (id: string) => {
-  const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${getBaseUrl()}/skills/${id}`, {
-    method: "DELETE",
-    headers: { ...authHeaders },
-  });
-
-  if (!res.ok) {
-    throw new InfrastructureError(
-      res.status,
-      `Infrastructure Error: ${res.status}`,
-    );
-  }
 };
