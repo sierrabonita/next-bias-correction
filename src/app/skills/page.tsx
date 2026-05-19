@@ -2,37 +2,12 @@
 import { Box, Flex, Stack } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { getAllSkills } from "@/services/skillService";
-// import type { Skill } from "@/types/skill";
 import SkillsContent from "./_components/SkillsContent";
 import SkillsHeader from "./_components/SkillsHeader";
 
 export const metadata: Metadata = {
   title: "Skills | SkillTracker",
 };
-
-// const dummySkills: Skill[] = [
-//   {
-//     id: "react",
-//     name: "React",
-//     layer: "Frontend",
-//     rating: 5,
-//     description: "SPA構築・Hooks・パフォーマンス最適化など。",
-//   },
-//   {
-//     id: "nextjs",
-//     name: "Next.js",
-//     layer: "Frontend",
-//     rating: 4,
-//     description: "App Router / SSR / SSG / ルーティング設計。",
-//   },
-//   {
-//     id: "nestjs",
-//     name: "NestJS",
-//     layer: "Backend",
-//     rating: 1,
-//     description: "認証・CRUD API・Prismaを用いたAPI実装。",
-//   },
-// ];
 
 // TODO: データ未取得時の表示
 const SkillPage = async () => {
