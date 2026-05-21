@@ -4,7 +4,7 @@ import { Menu, Portal } from "@chakra-ui/react";
 import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { deleteSkillAction } from "@/actions/skillAction";
-import { DeleteSkillConfirmDialog } from "@/app/skills/_components/DeleteSkillConfirmDialog";
+import { DeleteSkillConfirmDialog } from "@/app/home/_components/DeleteSkillConfirmDialog";
 
 type Props = {
   id: string;

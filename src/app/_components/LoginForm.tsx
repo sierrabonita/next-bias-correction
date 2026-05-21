@@ -36,7 +36,7 @@ export const LoginForm = () => {
       return;
     }
 
-    router.push("/skills");
+    router.push("/home");
   };
 
   return (

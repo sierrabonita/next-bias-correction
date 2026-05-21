@@ -1,5 +1,5 @@
 import { Heading } from "@chakra-ui/react";
-import { CreateSkillButton } from "@/app/skills/_components/CreateSkillButton";
+import { CreateSkillButton } from "@/app/home/_components/CreateSkillButton";
 
 const SkillsHeader = () => {
   return (
