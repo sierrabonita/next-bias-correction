@@ -1,4 +1,3 @@
-// TODO: ライブラリを直接呼ぶのは `@/lib/` 配下にする予定だが当面はこのまま呼ぶ
 import { Box, Flex, Stack, Text } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
