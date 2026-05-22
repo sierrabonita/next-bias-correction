@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Flex, HStack, IconButton, Stack, Text } from "@chakra-ui/react";
+import { Grid, HStack, IconButton, Stack, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { RxAvatar } from "react-icons/rx";
 
@@ -43,25 +43,23 @@ const CollapsibleSidebar = () => {
               style={{ width: `${ICON_SIZE}px`, height: `${ICON_SIZE}px` }}
             />
           </IconButton>
-          <Box
-            display="grid"
+          <Grid
             gridTemplateColumns={isOpen ? "1fr" : "0fr"}
             transition={`grid-template-columns ${TRANSITION_BASE}, opacity ${TRANSITION_BASE}`}
           >
             <Text overflow={"hidden"} textWrap={"nowrap"}>
               {"プロフィール"}
             </Text>
-          </Box>
+          </Grid>
         </HStack>
-        <Box
-          display="grid"
+        <Grid
           gridTemplateRows={isOpen ? "1fr" : "0fr"}
           transition={`grid-template-rows ${TRANSITION_BASE}`}
         >
           <Stack overflow="hidden">
             <Text>{"ログアウト"}</Text>
           </Stack>
-        </Box>
+        </Grid>
       </Stack>
     </Stack>
   );
