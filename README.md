@@ -1,5 +1,5 @@
 
-# next-bios-correction
+# next-bias-correction
 
 A simple Next.js demo site
 
