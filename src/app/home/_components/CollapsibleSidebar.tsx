@@ -1,8 +1,17 @@
 "use client";
 
-import { Grid, HStack, IconButton, Stack, Text } from "@chakra-ui/react";
+import {
+  Button,
+  ButtonGroup,
+  Grid,
+  HStack,
+  IconButton,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { RxAvatar } from "react-icons/rx";
+import ConfirmDialog from "@/components/dialogs/ConfirmDialog";
 
 const ICON_SIZE = 32;
 const ICON_BUTTON_SIZE = 44;
@@ -14,8 +23,14 @@ const TRANSITION_BASE = "0.2s cubic-bezier(0.4, 0, 0.2, 1)";
 
 const CollapsibleSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
   const handleClick = () => {
     setIsOpen(!isOpen);
+  };
+  // TODO: ログアウト処理
+  const handleClickAccept = () => {
+    console.log("handleClickAccept");
+    setIsOpenDialog(false);
   };
 
   const sidebarWidth = isOpen
@@ -57,10 +72,26 @@ const CollapsibleSidebar = () => {
           transition={`grid-template-rows ${TRANSITION_BASE}`}
         >
           <Stack overflow="hidden">
-            <Text>{"ログアウト"}</Text>
+            <ButtonGroup
+              orientation={"vertical"}
+              align={"start"}
+              size={"sm"}
+              variant={"plain"}
+            >
+              <Button onClick={() => setIsOpenDialog(true)}>
+                {"ログアウト"}
+              </Button>
+            </ButtonGroup>
           </Stack>
         </Grid>
       </Stack>
+      <ConfirmDialog
+        textBody={"ログアウトします。よろしいですか？"}
+        textTitle={"ログアウト確認"}
+        isOpen={isOpenDialog}
+        onOpenChange={setIsOpenDialog}
+        onClickConfirm={handleClickAccept}
+      />
     </Stack>
   );
 };
