@@ -8,6 +8,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
+      // signIn() 実行時に実行される
       authorize: async (credentials) => {
         if (!credentials?.email || !credentials?.password) {
           return null;
@@ -28,9 +29,9 @@ export const authOptions: NextAuthOptions = {
           if (res.ok && data.user) {
             return {
               id: data.user.id.toString(),
-              name: data.user.name,
               email: data.user.email,
-              accessToken: data.token, // サーバー側からきたJWTも保存しておく
+              accessToken: data.access_token,
+              refreshToken: data.refresh_token,
             };
           }
           return null;
@@ -42,18 +43,24 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  // この callback は NextAuth の典型的な設定
   callbacks: {
+    // authorize, useSession(), getServerSession()実行時に実行される
     async jwt({ token, user }) {
+      // user は authorizeの返り値のため, useSession()などの実行時には undefined となる
       if (user) {
+        // token は NextAuth発行したトークン, そこにバックエンド発行のトークンを代入する
+        // 以後 NextAuthトークンで各処理が行われる
         token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
         token.id = user.id;
       }
       return token;
     },
+    // useSession(), getSession(), getServerSession()実行時, `/api/auth/session`リクエスト時に実行される
     async session({ session, token }) {
       if (session.user) {
         session.user.accessToken = token.accessToken;
+        session.user.refreshToken = token.refreshToken;
         session.user.id = token.id;
       }
       return session;
