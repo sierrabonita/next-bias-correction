@@ -9,6 +9,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { RxAvatar } from "react-icons/rx";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog";
@@ -24,13 +25,20 @@ const TRANSITION_BASE = "0.2s cubic-bezier(0.4, 0, 0.2, 1)";
 const CollapsibleSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
-  // TODO: ログアウト処理
-  const handleClickAccept = () => {
-    console.log("handleClickAccept");
-    setIsOpenDialog(false);
+
+  const handleClickAccept = async () => {
+    try {
+      setIsLoggingOut(true);
+
+      await signOut({ callbackUrl: "/", redirect: true });
+    } catch (error) {
+      console.error("ログアウト中にエラーが発生しました:", error);
+      setIsLoggingOut(false);
+    }
   };
 
   const sidebarWidth = isOpen
@@ -89,6 +97,7 @@ const CollapsibleSidebar = () => {
         textBody={"ログアウトします。よろしいですか？"}
         textTitle={"ログアウト確認"}
         isOpen={isOpenDialog}
+        isLoading={isLoggingOut}
         onOpenChange={setIsOpenDialog}
         onClickConfirm={handleClickAccept}
       />
