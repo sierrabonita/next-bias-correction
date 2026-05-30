@@ -1,5 +1,6 @@
 "use client";
 
+import AuthProvider from "@/components/providers/AuthProvider";
 import { Provider as ChakraProvider } from "@/lib/chakra-ui/provider";
 import { Provider as JotaiProvider } from "@/lib/jotai/provider";
 import { Provider as QueryClientProvider } from "@/lib/react-query/provider";
@@ -12,7 +13,9 @@ const AppProviders = ({
   return (
     <ChakraProvider>
       <QueryClientProvider>
-        <JotaiProvider>{children}</JotaiProvider>
+        <JotaiProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </JotaiProvider>
       </QueryClientProvider>
     </ChakraProvider>
   );
