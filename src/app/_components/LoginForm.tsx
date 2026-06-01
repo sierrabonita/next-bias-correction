@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { PasswordInput } from "@/lib/chakra-ui/components/ui/password-input";
 import { type LoginDto, loginSchema } from "@/schemas/loginSchema";
 
-export const LoginForm = () => {
+export const LogInForm = () => {
   const {
     handleSubmit,
     register,
@@ -66,7 +66,7 @@ export const LoginForm = () => {
           bg="blue.500"
           color="white"
         >
-          Login
+          Log In
         </Button>
         {errorMessage && <Text color={"red"}>{errorMessage}</Text>}
       </Fieldset.Root>

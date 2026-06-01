@@ -1,5 +1,5 @@
 import { Box, Center, Flex, Heading, Link, Stack } from "@chakra-ui/react";
-import { LoginForm } from "@/app/_components/LoginForm";
+import { LogInForm } from "@/app/_components/LogInForm";
 
 const TopPage = () => {
   return (
@@ -16,7 +16,7 @@ const TopPage = () => {
           <Heading fontSize="4xl" fontWeight="bold">
             Skill Tracker
           </Heading>
-          <LoginForm />
+          <LogInForm />
 
           <Flex justifyContent={"right"}>
             <Link
