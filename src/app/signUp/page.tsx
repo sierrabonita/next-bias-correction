@@ -1,7 +1,7 @@
 import { Box, Center, Flex, Heading, Link, Stack } from "@chakra-ui/react";
-import { LoginForm } from "@/app/_components/LoginForm";
+import { SignUpForm } from "@/app/signUp/_components/SignUpForm";
 
-const TopPage = () => {
+const SignupPage = () => {
   return (
     <Center minH="100vh">
       <Box
@@ -14,17 +14,16 @@ const TopPage = () => {
       >
         <Stack gap="4">
           <Heading fontSize="4xl" fontWeight="bold">
-            Skill Tracker
+            Sign Up: Skill Tracker
           </Heading>
-          <LoginForm />
-
+          <SignUpForm />
           <Flex justifyContent={"right"}>
             <Link
-              href="/signUp/"
+              href="/"
               variant={"plain"}
               _hover={{ textDecoration: "none" }}
             >
-              Sign Up?
+              Log In?
             </Link>
           </Flex>
         </Stack>
@@ -33,4 +32,4 @@ const TopPage = () => {
   );
 };
 
-export default TopPage;
+export default SignupPage;
