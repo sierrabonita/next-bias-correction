@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { getUserSkillsByIdService } from "@/services/userSkillService";
+import type { UserSkill } from "@/types/userSkill";
 import CollapsibleSidebar from "./_components/CollapsibleSidebar";
 import SkillsContent from "./_components/SkillsContent";
 import SkillsHeader from "./_components/SkillsHeader";
@@ -15,10 +16,10 @@ const SkillPage = async () => {
   const session = await getServerSession(authOptions);
   const id = session?.user?.id;
 
-  let userSkills = [];
+  let userSkill: UserSkill | null = null;
 
   if (id) {
-    userSkills = await getUserSkillsByIdService(id);
+    userSkill = await getUserSkillsByIdService(id);
   }
 
   return (
@@ -29,8 +30,8 @@ const SkillPage = async () => {
           <SkillsHeader />
         </Flex>
         <Stack gap={4}>
-          {userSkills ? (
-            <SkillsContent userSkills={userSkills} />
+          {userSkill ? (
+            <SkillsContent userSkill={userSkill} />
           ) : (
             <Text>{"データがありません"}</Text>
           )}

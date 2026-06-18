@@ -1,4 +1,6 @@
-export type UserSkill = {
+import type { PaginatedResponse } from "@/types/paginateResponse";
+
+export type UserSkillData = {
   id: string;
   rating: 1 | 2 | 3 | 4 | 5;
   description?: string | null;
@@ -8,3 +10,5 @@ export type UserSkill = {
     layer: "Frontend" | "NativeApp" | "Backend" | "Infrastructure" | "Other";
   };
 };
+
+export type UserSkill = PaginatedResponse<UserSkillData>;

@@ -1,15 +1,16 @@
 import { Badge, Box, Heading, HStack, Stack, Text } from "@chakra-ui/react";
 import { SkillMenu } from "@/app/home/_components/SkillMenu";
-import type { UserSkill } from "@/types/userSkill";
+import type { UserSkill, UserSkillData } from "@/types/userSkill";
 import StarRating from "./StarRating";
 
 type Props = {
-  userSkills: UserSkill[];
+  userSkill: UserSkill;
 };
 
 const SkillsContent = (props: Props) => {
-  const { userSkills } = props;
-  const layerColorPalette: Record<UserSkill["skill"]["layer"], string> = {
+  const { userSkill } = props;
+  const { data: items } = userSkill;
+  const layerColorPalette: Record<UserSkillData["skill"]["layer"], string> = {
     Frontend: "green",
     NativeApp: "orange",
     Backend: "blue",
@@ -19,9 +20,9 @@ const SkillsContent = (props: Props) => {
 
   return (
     <>
-      {userSkills.map((userSkill) => (
+      {items.map((item) => (
         <Box
-          key={userSkill.id}
+          key={item.id}
           borderWidth="1px"
           borderRadius="md"
           p={4}
@@ -30,28 +31,28 @@ const SkillsContent = (props: Props) => {
           <HStack justify="space-between">
             <Stack gap={1}>
               <Badge
-                colorPalette={layerColorPalette[userSkill.skill.layer]}
+                colorPalette={layerColorPalette[item.skill.layer]}
                 alignSelf="flex-start"
               >
-                {userSkill.skill.layer}
+                {item.skill.layer}
               </Badge>
               <HStack gap={2}>
                 <Heading as="h2" size="md">
-                  {userSkill.skill.name}
+                  {item.skill.name}
                 </Heading>
-                <StarRating rating={userSkill.rating} size="md" />
+                <StarRating rating={item.rating} size="md" />
               </HStack>
-              {userSkill.description && (
+              {item.description && (
                 <Text fontSize="sm" color="gray.600">
-                  {userSkill.description}
+                  {item.description}
                 </Text>
               )}
             </Stack>
-            <SkillMenu id={userSkill.id} />
+            <SkillMenu id={item.id} />
           </HStack>
         </Box>
       ))}
-      {userSkills.length === 0 && (
+      {items.length === 0 && (
         <Text color="gray.500">まだスキルが登録されていません</Text>
       )}
     </>

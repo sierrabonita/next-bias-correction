@@ -4,6 +4,13 @@
   "dictionaryDefinitions": [],
   "dictionaries": [],
   "words": [],
-  "ignoreWords": ["chakra", "evenodd", "logomark", "noopener", "noreferrer"],
+  "ignoreWords": [
+    "chakra",
+    "evenodd",
+    "logomark",
+    "noopener",
+    "noreferrer",
+    "pagy"
+  ],
   "import": []
 }
