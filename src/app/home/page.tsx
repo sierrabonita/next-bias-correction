@@ -15,10 +15,10 @@ const SkillPage = async () => {
   const session = await getServerSession(authOptions);
   const id = session?.user?.id;
 
-  let skills = [];
+  let userSkills = [];
 
   if (id) {
-    skills = await getUserSkillsByIdService(id);
+    userSkills = await getUserSkillsByIdService(id);
   }
 
   return (
@@ -29,8 +29,8 @@ const SkillPage = async () => {
           <SkillsHeader />
         </Flex>
         <Stack gap={4}>
-          {skills ? (
-            <SkillsContent skills={skills} />
+          {userSkills ? (
+            <SkillsContent userSkills={userSkills} />
           ) : (
             <Text>{"データがありません"}</Text>
           )}
