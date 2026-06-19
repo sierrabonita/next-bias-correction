@@ -1,6 +1,7 @@
 import { Box, Flex, HStack, Stack, Text } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
+import Pagination from "@/components/Pagination";
 import { authOptions } from "@/lib/auth";
 import { getUserSkillsByIdService } from "@/services/userSkillService";
 import type { UserSkill } from "@/types/userSkill";
@@ -12,15 +13,23 @@ export const metadata: Metadata = {
   title: "Skills | SkillTracker",
 };
 
-const SkillPage = async () => {
+type Props = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+const SkillPage = async ({ searchParams }: Props) => {
+  const params = await searchParams;
+  const page = typeof params.page === "string" ? params.page : "1";
   const session = await getServerSession(authOptions);
   const id = session?.user?.id;
 
   let userSkill: UserSkill | null = null;
 
   if (id) {
-    userSkill = await getUserSkillsByIdService(id);
+    userSkill = await getUserSkillsByIdService(id, page);
   }
+
+  console.log("userSkill: ", userSkill);
 
   return (
     <HStack alignItems={"start"} gap={0}>
@@ -31,7 +40,10 @@ const SkillPage = async () => {
         </Flex>
         <Stack gap={4}>
           {userSkill ? (
-            <SkillsContent userSkill={userSkill} />
+            <>
+              <SkillsContent userSkill={userSkill} />
+              <Pagination meta={userSkill.meta} />
+            </>
           ) : (
             <Text>{"データがありません"}</Text>
           )}

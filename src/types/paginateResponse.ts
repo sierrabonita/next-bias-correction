@@ -1,4 +1,4 @@
-type PagyMeta = {
+export type PagyMeta = {
   url_template: string;
   first_url: string;
   current_url: string;

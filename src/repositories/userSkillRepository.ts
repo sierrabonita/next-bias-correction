@@ -17,9 +17,9 @@ const getAuthHeaders = async (): Promise<Record<string, string>> => {
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
-export const getUserSkillsByIdRepo = async (id: string) => {
+export const getUserSkillsByIdRepo = async (id: string, page: string = "1") => {
   const authHeaders = await getAuthHeaders();
-  const res = await fetch(`${getBaseUrl()}/users/${id}/skills`, {
+  const res = await fetch(`${getBaseUrl()}/users/${id}/skills?page=${page}`, {
     cache: "no-store",
     headers: { ...authHeaders },
   });
