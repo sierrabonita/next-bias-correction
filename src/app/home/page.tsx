@@ -29,8 +29,6 @@ const SkillPage = async ({ searchParams }: Props) => {
     userSkill = await getUserSkillsByIdService(id, page);
   }
 
-  console.log("userSkill: ", userSkill);
-
   return (
     <HStack alignItems={"start"} gap={0}>
       <CollapsibleSidebar />
