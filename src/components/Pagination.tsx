@@ -25,6 +25,7 @@ const Pagination = ({ meta }: PaginationProps) => {
     router.push(`${pathname}?${params.toString()}`, { scroll: true });
   };
 
+  // 表示するページ番号の配列を生成（現在のページの前後2ページを表示）
   const getPageNumbers = () => {
     const pages = [];
     const maxVisiblePages = 5;
