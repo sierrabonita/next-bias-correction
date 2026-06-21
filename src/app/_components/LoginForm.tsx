@@ -3,7 +3,7 @@
 import { Box, Button, Field, Fieldset, Input, Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { PasswordInput } from "@/lib/chakra-ui/components/ui/password-input";
@@ -36,7 +36,13 @@ export const LogInForm = () => {
       return;
     }
 
-    router.push("/home");
+    const session = await getSession();
+    const role = session?.user?.role;
+    if (role === "admin") {
+      router.push("/admin");
+    } else {
+      router.push("/home");
+    }
   };
 
   return (

@@ -37,6 +37,7 @@ export const authOptions: NextAuthOptions = {
               email: data.user.email,
               accessToken: data.access_token,
               refreshToken: data.refresh_token,
+              role: data.user.role,
             };
           }
           return null;
@@ -63,6 +64,7 @@ export const authOptions: NextAuthOptions = {
           accessToken: user.accessToken,
           refreshToken: user.refreshToken,
           id: user.id,
+          role: user.role,
           accessTokenExpires,
         } as JWT;
       }
@@ -86,6 +88,7 @@ export const authOptions: NextAuthOptions = {
       session.user.id = token.id as string;
       session.user.accessToken = token.accessToken as string;
       session.user.refreshToken = token.refreshToken as string;
+      session.user.role = token.role;
       session.error = token.error;
       return session;
     },
