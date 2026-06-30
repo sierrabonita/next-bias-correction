@@ -11,7 +11,7 @@ import SkillsContent from "./_components/SkillsContent";
 import SkillsHeader from "./_components/SkillsHeader";
 
 export const metadata: Metadata = {
-  title: "Skills | SkillTracker",
+  title: "Home | SkillTracker",
 };
 
 type Props = {

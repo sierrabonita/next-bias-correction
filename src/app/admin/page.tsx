@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import CollapsibleSidebar from "@/app/home/_components/CollapsibleSidebar";
 
 export const metadata: Metadata = {
-  title: "Admin | SkillTracker",
+  title: "Admin Home | SkillTracker",
 };
 
 const AdminPage = () => {
