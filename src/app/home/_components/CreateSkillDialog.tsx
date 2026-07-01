@@ -6,26 +6,23 @@ import {
   Dialog,
   Field,
   Input,
+  type ListCollection,
   Portal,
   RatingGroup,
   Select,
   Stack,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { createSkillAction } from "@/actions/skillAction";
-import { type CreateSkillDto, skillSchema } from "@/schemas/skillSchema";
+import { createSkillAction, getAllSkillsAction } from "@/actions/skillAction";
+import {
+  type CreateSkillDto,
+  type FetchSkill,
+  skillSchema,
+} from "@/schemas/skillSchema";
 
-// TODO: 外部ファイル化
-const categories = createListCollection({
-  items: [
-    { label: "Frontend", value: "frontend" },
-    { label: "NativeApp", value: "nativeApp" },
-    { label: "Backend", value: "backend" },
-    { label: "Infrastructure", value: "infrastructure" },
-    { label: "Other", value: "other" },
-  ],
-});
+export const useAllCategories = () => {};
 
 type Props = {
   open: boolean;
@@ -38,11 +35,44 @@ export const CreateSkillDialog = ({ open, onOpenChange }: Props) => {
     handleSubmit,
     control,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<CreateSkillDto>({
     resolver: zodResolver(skillSchema),
-    defaultValues: { name: "", rating: 3, layer: "" },
+    defaultValues: { name: "", rating: 3, description: "" },
   });
+
+  const [skillListCollection, setSkillListCollection] = useState<
+    ListCollection<FetchSkill>
+  >(
+    createListCollection<FetchSkill>({
+      items: [],
+      itemToString: (item) => item.name,
+      itemToValue: (item) => item.name,
+    }),
+  );
+
+  const createSkillOptions = useCallback(async () => {
+    try {
+      const res = await getAllSkillsAction();
+      const skills = res.data.map((item: FetchSkill) => {
+        return { name: item.name, layer: item.layer };
+      });
+
+      const collection = createListCollection<FetchSkill>({
+        items: skills,
+        itemToString: (item) => item.name,
+        itemToValue: (item) => item.name,
+      });
+      setSkillListCollection(collection);
+    } catch (error) {
+      console.error("Data fetching error:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    createSkillOptions();
+  }, [createSkillOptions]);
 
   const onSubmit = async (data: CreateSkillDto) => {
     await createSkillAction(data);
@@ -67,8 +97,57 @@ export const CreateSkillDialog = ({ open, onOpenChange }: Props) => {
               <Dialog.Body>
                 <Stack gap="5">
                   <Field.Root invalid={!!errors.name}>
-                    <Field.Label>スキル名</Field.Label>
-                    <Input {...register("name")} placeholder="例: Next.js" />
+                    <Field.Label>スキル</Field.Label>
+                    <Controller
+                      control={control}
+                      name="name"
+                      render={({ field }) => {
+                        return (
+                          <Select.Root
+                            name={field.name}
+                            value={[field.value]}
+                            onValueChange={(e) => {
+                              field.onChange(e.value[0]);
+                              // layer をここで設定
+                              const selectedItem = e.items[0];
+                              if (selectedItem) {
+                                setValue("layer", selectedItem.layer, {
+                                  shouldValidate: true,
+                                });
+                              }
+                            }}
+                            collection={skillListCollection}
+                          >
+                            <Select.HiddenSelect />
+                            <Select.Control>
+                              <Select.Trigger>
+                                <Select.ValueText placeholder="スキルを選択してください" />
+                              </Select.Trigger>
+                              <Select.IndicatorGroup>
+                                <Select.Indicator />
+                              </Select.IndicatorGroup>
+                            </Select.Control>
+                            <Portal>
+                              <Select.Positioner>
+                                <Select.Content>
+                                  {skillListCollection.items.map((skill) => {
+                                    return (
+                                      <Select.Item
+                                        item={skill}
+                                        key={skill.name}
+                                      >
+                                        {skill.name}
+                                        <Select.ItemIndicator />
+                                      </Select.Item>
+                                    );
+                                  })}
+                                </Select.Content>
+                              </Select.Positioner>
+                            </Portal>
+                          </Select.Root>
+                        );
+                      }}
+                    />
                     <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
                   </Field.Root>
 
@@ -88,48 +167,6 @@ export const CreateSkillDialog = ({ open, onOpenChange }: Props) => {
                         </RatingGroup.Root>
                       )}
                     />
-                  </Field.Root>
-
-                  <Field.Root invalid={!!errors.layer}>
-                    <Field.Label>カテゴリ</Field.Label>
-                    <Controller
-                      control={control}
-                      name="layer"
-                      render={({ field }) => (
-                        <Select.Root
-                          name={field.name}
-                          value={[field.value]}
-                          onValueChange={(e) => field.onChange(e.value[0])}
-                          collection={categories}
-                        >
-                          <Select.HiddenSelect />
-                          <Select.Control>
-                            <Select.Trigger>
-                              <Select.ValueText placeholder="カテゴリを選択" />
-                            </Select.Trigger>
-                            <Select.IndicatorGroup>
-                              <Select.Indicator />
-                            </Select.IndicatorGroup>
-                          </Select.Control>
-                          <Portal>
-                            <Select.Positioner>
-                              <Select.Content>
-                                {categories.items.map((category) => (
-                                  <Select.Item
-                                    item={category}
-                                    key={category.value}
-                                  >
-                                    {category.label}
-                                    <Select.ItemIndicator />
-                                  </Select.Item>
-                                ))}
-                              </Select.Content>
-                            </Select.Positioner>
-                          </Portal>
-                        </Select.Root>
-                      )}
-                    />
-                    <Field.ErrorText>{errors.layer?.message}</Field.ErrorText>
                   </Field.Root>
 
                   <Field.Root invalid={!!errors.name}>
