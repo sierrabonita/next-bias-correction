@@ -1,8 +1,17 @@
 import {
   createSkillRepo,
   deleteSkillRepo,
+  getSkillsRepo,
 } from "@/repositories/skillRepository";
 import type { CreateSkillDto } from "@/schemas/skillSchema";
+
+export const getAllSkillsService = async ({
+  excludeLoginUserSkills = false,
+}: {
+  excludeLoginUserSkills?: boolean;
+} = {}) => {
+  return await getSkillsRepo({ excludeLoginUserSkills });
+};
 
 export const createSkillService = async (data: CreateSkillDto) => {
   return await createSkillRepo(data);

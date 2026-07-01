@@ -11,15 +11,47 @@ const getBaseUrl = () => {
   return baseUrl;
 };
 
-const getAuthHeaders = async (): Promise<Record<string, string>> => {
+const getAuthSession = async () => {
   const session = await getServerSession(authOptions);
   const token = session?.user?.accessToken;
+  const userId = session?.user?.id;
 
-  return token ? { Authorization: `Bearer ${token}` } : {};
+  const headers: Record<string, string> = token
+    ? { Authorization: `Bearer ${token}` }
+    : {};
+
+  return { headers, userId };
+};
+
+export const getSkillsRepo = async ({
+  excludeLoginUserSkills = false,
+}: {
+  excludeLoginUserSkills?: boolean;
+} = {}) => {
+  const { headers: authHeaders, userId } = await getAuthSession();
+
+  const url = `${getBaseUrl()}/skills`;
+  const query = new URLSearchParams();
+  if (excludeLoginUserSkills && userId) {
+    query.set("exclude_user_id", userId);
+  }
+
+  const res = await fetch(`${url}?${query}`, {
+    headers: { ...authHeaders },
+  });
+
+  if (!res.ok) {
+    throw new InfrastructureError(
+      res.status,
+      `Infrastructure Error: ${res.status}`,
+    );
+  }
+
+  return res.json();
 };
 
 export const createSkillRepo = async (data: CreateSkillDto) => {
-  const authHeaders = await getAuthHeaders();
+  const { headers: authHeaders } = await getAuthSession();
   const res = await fetch(`${getBaseUrl()}/skills`, {
     method: "POST",
     headers: {
@@ -40,7 +72,7 @@ export const createSkillRepo = async (data: CreateSkillDto) => {
 };
 
 export const deleteSkillRepo = async (id: string) => {
-  const authHeaders = await getAuthHeaders();
+  const { headers: authHeaders } = await getAuthSession();
   const res = await fetch(`${getBaseUrl()}/skills/${id}`, {
     method: "DELETE",
     headers: { ...authHeaders },

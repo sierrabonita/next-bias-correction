@@ -5,7 +5,16 @@ import type { CreateSkillDto } from "@/schemas/skillSchema";
 import {
   createSkillService,
   deleteSkillService,
+  getAllSkillsService,
 } from "@/services/skillService";
+
+export const getAllSkillsAction = async ({
+  excludeLoginUserSkills = false,
+}: {
+  excludeLoginUserSkills?: boolean;
+} = {}) => {
+  return await getAllSkillsService({ excludeLoginUserSkills });
+};
 
 export const createSkillAction = async (data: CreateSkillDto) => {
   const res = await createSkillService(data);

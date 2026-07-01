@@ -54,7 +54,7 @@ export const CreateSkillDialog = ({ open, onOpenChange }: Props) => {
 
   const createSkillOptions = useCallback(async () => {
     try {
-      const res = await getAllSkillsAction();
+      const res = await getAllSkillsAction({ excludeLoginUserSkills: true });
       const skills = res.data.map((item: FetchSkill) => {
         return { name: item.name, layer: item.layer };
       });
