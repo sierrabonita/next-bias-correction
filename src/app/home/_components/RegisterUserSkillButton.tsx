@@ -2,17 +2,17 @@
 
 import { Button } from "@chakra-ui/react";
 import { useState } from "react";
-import { CreateSkillDialog } from "./CreateSkillDialog";
+import { RegisterUserSkillDialog } from "./RegisterUserSkillDialog";
 
-export const CreateSkillButton = () => {
+export const RegisterUserSkillButton = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <Button onClick={() => setOpen(true)} colorScheme="blue">
-        スキルを追加
+        スキルを登録
       </Button>
-      <CreateSkillDialog
+      <RegisterUserSkillDialog
         open={open}
         onOpenChange={(details) => setOpen(details.open)}
       />

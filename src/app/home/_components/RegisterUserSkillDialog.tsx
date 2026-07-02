@@ -29,7 +29,7 @@ type Props = {
   onOpenChange: (details: { open: boolean }) => void;
 };
 
-export const CreateSkillDialog = ({ open, onOpenChange }: Props) => {
+export const RegisterUserSkillDialog = ({ open, onOpenChange }: Props) => {
   const {
     register,
     handleSubmit,
