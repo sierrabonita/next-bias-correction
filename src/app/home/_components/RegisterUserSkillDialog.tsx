@@ -15,12 +15,13 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { createSkillAction, getAllSkillsAction } from "@/actions/skillAction";
+import { getAllSkillsAction } from "@/actions/skillAction";
+import { registerUserSkillAction } from "@/actions/userSkillAction";
+import type { FetchSkill } from "@/schemas/skillSchema";
 import {
-  type CreateSkillDto,
-  type FetchSkill,
-  skillSchema,
-} from "@/schemas/skillSchema";
+  type RegisterUserSkillDto,
+  registerUserSkillSchema,
+} from "@/schemas/userSkillSchema";
 
 export const useAllCategories = () => {};
 
@@ -35,11 +36,10 @@ export const RegisterUserSkillDialog = ({ open, onOpenChange }: Props) => {
     handleSubmit,
     control,
     reset,
-    setValue,
     formState: { errors, isSubmitting },
-  } = useForm<CreateSkillDto>({
-    resolver: zodResolver(skillSchema),
-    defaultValues: { name: "", rating: 3, description: "" },
+  } = useForm<RegisterUserSkillDto>({
+    resolver: zodResolver(registerUserSkillSchema),
+    defaultValues: { skill_id: 0, rating: 3, description: "" },
   });
 
   const [skillListCollection, setSkillListCollection] = useState<
@@ -48,21 +48,24 @@ export const RegisterUserSkillDialog = ({ open, onOpenChange }: Props) => {
     createListCollection<FetchSkill>({
       items: [],
       itemToString: (item) => item.name,
-      itemToValue: (item) => item.name,
+      itemToValue: (item) => item.id.toString(),
     }),
   );
 
   const createSkillOptions = useCallback(async () => {
     try {
       const res = await getAllSkillsAction({ excludeLoginUserSkills: true });
-      const skills = res.data.map((item: FetchSkill) => {
-        return { name: item.name, layer: item.layer };
-      });
+      console.log("res", res);
+      const skills = res.data.map(
+        (item: { id: string | number; name: string; layer: string }) => {
+          return { id: Number(item.id), name: item.name, layer: item.layer };
+        },
+      );
 
       const collection = createListCollection<FetchSkill>({
         items: skills,
         itemToString: (item) => item.name,
-        itemToValue: (item) => item.name,
+        itemToValue: (item) => item.id.toString(),
       });
       setSkillListCollection(collection);
     } catch (error) {
@@ -74,8 +77,10 @@ export const RegisterUserSkillDialog = ({ open, onOpenChange }: Props) => {
     createSkillOptions();
   }, [createSkillOptions]);
 
-  const onSubmit = async (data: CreateSkillDto) => {
-    await createSkillAction(data);
+  const onSubmit = async (data: RegisterUserSkillDto) => {
+    console.log("onSubmit", data);
+
+    await registerUserSkillAction(data);
 
     onOpenChange({ open: false });
 
@@ -96,25 +101,18 @@ export const RegisterUserSkillDialog = ({ open, onOpenChange }: Props) => {
 
               <Dialog.Body>
                 <Stack gap="5">
-                  <Field.Root invalid={!!errors.name}>
+                  <Field.Root invalid={!!errors.skill_id}>
                     <Field.Label>スキル</Field.Label>
                     <Controller
                       control={control}
-                      name="name"
+                      name="skill_id"
                       render={({ field }) => {
                         return (
                           <Select.Root
                             name={field.name}
-                            value={[field.value]}
+                            value={field.value ? [field.value.toString()] : []}
                             onValueChange={(e) => {
-                              field.onChange(e.value[0]);
-                              // layer をここで設定
-                              const selectedItem = e.items[0];
-                              if (selectedItem) {
-                                setValue("layer", selectedItem.layer, {
-                                  shouldValidate: true,
-                                });
-                              }
+                              field.onChange(Number(e.value[0]));
                             }}
                             collection={skillListCollection}
                           >
@@ -132,10 +130,7 @@ export const RegisterUserSkillDialog = ({ open, onOpenChange }: Props) => {
                                 <Select.Content>
                                   {skillListCollection.items.map((skill) => {
                                     return (
-                                      <Select.Item
-                                        item={skill}
-                                        key={skill.name}
-                                      >
+                                      <Select.Item item={skill} key={skill.id}>
                                         {skill.name}
                                         <Select.ItemIndicator />
                                       </Select.Item>
@@ -148,7 +143,9 @@ export const RegisterUserSkillDialog = ({ open, onOpenChange }: Props) => {
                         );
                       }}
                     />
-                    <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+                    <Field.ErrorText>
+                      {errors.skill_id?.message}
+                    </Field.ErrorText>
                   </Field.Root>
 
                   <Field.Root invalid={!!errors.rating}>
@@ -169,13 +166,15 @@ export const RegisterUserSkillDialog = ({ open, onOpenChange }: Props) => {
                     />
                   </Field.Root>
 
-                  <Field.Root invalid={!!errors.name}>
+                  <Field.Root invalid={!!errors.description}>
                     <Field.Label>説明</Field.Label>
                     <Input
                       {...register("description")}
                       placeholder="例: Vite, Next.js, ReactNativeの実装基盤"
                     />
-                    <Field.ErrorText>{errors.name?.message}</Field.ErrorText>
+                    <Field.ErrorText>
+                      {errors.description?.message}
+                    </Field.ErrorText>
                   </Field.Root>
                 </Stack>
               </Dialog.Body>

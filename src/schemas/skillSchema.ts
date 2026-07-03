@@ -16,4 +16,6 @@ export const skillSchema = z.object({
 
 export type CreateSkillDto = z.infer<typeof skillSchema>;
 
-export type FetchSkill = Pick<CreateSkillDto, "name" | "layer">;
+export type FetchSkill = Pick<CreateSkillDto, "name" | "layer"> & {
+  id: number;
+};

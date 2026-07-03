@@ -1,4 +1,8 @@
-import { getUserSkillsByIdRepo } from "@/repositories/userSkillRepository";
+import {
+  getUserSkillsByIdRepo,
+  registerUserSkillRepo,
+} from "@/repositories/userSkillRepository";
+import type { RegisterUserSkillDto } from "@/schemas/userSkillSchema";
 
 export const getUserSkillsByIdService = async (
   id: string,
@@ -7,4 +11,8 @@ export const getUserSkillsByIdService = async (
   const userSkills = await getUserSkillsByIdRepo(id, page);
 
   return userSkills;
+};
+
+export const registerUserSkillService = async (data: RegisterUserSkillDto) => {
+  return registerUserSkillRepo(data);
 };
