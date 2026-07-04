@@ -10,7 +10,7 @@ type Props = {
   onDelete: (id: string) => void;
 };
 
-export const DeleteSkillConfirmDialog = (props: Props) => {
+export const DeleteUserSkillConfirmDialog = (props: Props) => {
   const { id, open, onOpenChange, onDelete } = props;
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange} role="alertdialog">
