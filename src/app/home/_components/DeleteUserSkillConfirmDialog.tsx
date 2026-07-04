@@ -3,15 +3,13 @@
 import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react";
 
 type Props = {
-  id: string;
   open: boolean;
   onOpenChange: (event: { open: boolean }) => void;
-  // onClose: () => void;
-  onDelete: (id: string) => void;
+  onDelete: () => void;
 };
 
 export const DeleteUserSkillConfirmDialog = (props: Props) => {
-  const { id, open, onOpenChange, onDelete } = props;
+  const { open, onOpenChange, onDelete } = props;
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange} role="alertdialog">
       <Portal>
@@ -30,13 +28,7 @@ export const DeleteUserSkillConfirmDialog = (props: Props) => {
               <Dialog.ActionTrigger asChild>
                 <Button variant="outline">キャンセル</Button>
               </Dialog.ActionTrigger>
-              <Button
-                colorPalette="red"
-                onClick={() => {
-                  // 削除処理をここに
-                  onDelete(id);
-                }}
-              >
+              <Button colorPalette="red" onClick={() => onDelete()}>
                 削除する
               </Button>
             </Dialog.Footer>

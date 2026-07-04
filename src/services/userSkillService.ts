@@ -1,4 +1,5 @@
 import {
+  deleteUserSkillRepo,
   getUserSkillsByIdRepo,
   registerUserSkillRepo,
 } from "@/repositories/userSkillRepository";
@@ -15,4 +16,8 @@ export const getUserSkillsByIdService = async (
 
 export const registerUserSkillService = async (data: RegisterUserSkillDto) => {
   return registerUserSkillRepo(data);
+};
+
+export const deleteUserSkillService = async (userSkillId: string) => {
+  return deleteUserSkillRepo(userSkillId);
 };

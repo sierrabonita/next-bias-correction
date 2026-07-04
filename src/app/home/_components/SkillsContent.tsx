@@ -48,7 +48,7 @@ const SkillsContent = (props: Props) => {
                 </Text>
               )}
             </Stack>
-            <SkillMenu id={item.id} />
+            <SkillMenu userSkillId={item.id} />
           </HStack>
         </Box>
       ))}

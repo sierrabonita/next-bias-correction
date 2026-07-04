@@ -3,15 +3,15 @@
 import { Menu, Portal } from "@chakra-ui/react";
 import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { deleteSkillAction } from "@/actions/skillAction";
+import { deleteUserSkillAction } from "@/actions/userSkillAction";
 import { DeleteUserSkillConfirmDialog } from "@/app/home/_components/DeleteUserSkillConfirmDialog";
 
 type Props = {
-  id: string;
+  userSkillId: string;
 };
 
 export const SkillMenu = (props: Props) => {
-  const { id } = props;
+  const { userSkillId } = props;
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -19,8 +19,8 @@ export const SkillMenu = (props: Props) => {
   const openDialog = () => setDialogOpen(true);
   const closeDialog = () => setDialogOpen(false);
 
-  const deleteSkill = async (id: string) => {
-    await deleteSkillAction(id);
+  const deleteUserSkill = async () => {
+    await deleteUserSkillAction(userSkillId);
     closeDialog();
   };
 
@@ -45,11 +45,9 @@ export const SkillMenu = (props: Props) => {
         </Portal>
       </Menu.Root>
       <DeleteUserSkillConfirmDialog
-        id={id}
         open={dialogOpen}
         onOpenChange={(e) => setDialogOpen(e.open)}
-        // onClose={closeDialog}
-        onDelete={deleteSkill}
+        onDelete={deleteUserSkill}
       />
     </>
   );

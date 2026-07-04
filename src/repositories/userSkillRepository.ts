@@ -81,3 +81,22 @@ export const registerUserSkillRepo = async (data: RegisterUserSkillDto) => {
 
   return res.json();
 };
+
+export const deleteUserSkillRepo = async (userSkillId: string) => {
+  const { headers, userId } = await getAuthSession();
+
+  const res = await fetch(
+    `${getBaseUrl()}/users/${userId}/skills/${userSkillId}`,
+    {
+      method: "DELETE",
+      headers: { ...headers },
+    },
+  );
+
+  if (!res.ok) {
+    throw new InfrastructureError(
+      res.status,
+      `Infrastructure Error: ${res.status}`,
+    );
+  }
+};
