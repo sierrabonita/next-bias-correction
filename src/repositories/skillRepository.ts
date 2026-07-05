@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
 import { InfrastructureError } from "@/errors/InfrastructureError";
-import { authOptions } from "@/lib/auth";
+import { getAuthSession } from "@/repositories/utils/session";
 import type { CreateSkillDto } from "@/schemas/skillSchema";
 
 const getBaseUrl = () => {
@@ -11,24 +10,12 @@ const getBaseUrl = () => {
   return baseUrl;
 };
 
-const getAuthSession = async () => {
-  const session = await getServerSession(authOptions);
-  const token = session?.user?.accessToken;
-  const userId = session?.user?.id;
-
-  const headers: Record<string, string> = token
-    ? { Authorization: `Bearer ${token}` }
-    : {};
-
-  return { headers, userId };
-};
-
 export const getSkillsRepo = async ({
   excludeLoginUserSkills = false,
 }: {
   excludeLoginUserSkills?: boolean;
 } = {}) => {
-  const { headers: authHeaders, userId } = await getAuthSession();
+  const { headers, userId } = await getAuthSession();
 
   const url = `${getBaseUrl()}/skills`;
   const query = new URLSearchParams();
@@ -37,7 +24,7 @@ export const getSkillsRepo = async ({
   }
 
   const res = await fetch(`${url}?${query}`, {
-    headers: { ...authHeaders },
+    headers: { ...headers },
   });
 
   if (!res.ok) {
@@ -51,12 +38,12 @@ export const getSkillsRepo = async ({
 };
 
 export const createSkillRepo = async (data: CreateSkillDto) => {
-  const { headers: authHeaders } = await getAuthSession();
+  const { headers } = await getAuthSession();
   const res = await fetch(`${getBaseUrl()}/skills`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...authHeaders,
+      ...headers,
     },
     body: JSON.stringify(data),
   });
@@ -72,10 +59,10 @@ export const createSkillRepo = async (data: CreateSkillDto) => {
 };
 
 export const deleteSkillRepo = async (id: string) => {
-  const { headers: authHeaders } = await getAuthSession();
+  const { headers } = await getAuthSession();
   const res = await fetch(`${getBaseUrl()}/skills/${id}`, {
     method: "DELETE",
-    headers: { ...authHeaders },
+    headers: { ...headers },
   });
 
   if (!res.ok) {

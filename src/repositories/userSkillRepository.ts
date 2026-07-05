@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
 import { InfrastructureError } from "@/errors/InfrastructureError";
-import { authOptions } from "@/lib/auth";
+import { getAuthSession } from "@/repositories/utils/session";
 import type { RegisterUserSkillDto } from "@/schemas/userSkillSchema";
 
 const getBaseUrl = () => {
@@ -11,30 +10,11 @@ const getBaseUrl = () => {
   return baseUrl;
 };
 
-const getAuthHeaders = async (): Promise<Record<string, string>> => {
-  const session = await getServerSession(authOptions);
-  const token = session?.user?.accessToken;
-
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
-
-const getAuthSession = async () => {
-  const session = await getServerSession(authOptions);
-  const token = session?.user?.accessToken;
-  const userId = session?.user?.id;
-
-  const headers: Record<string, string> = token
-    ? { Authorization: `Bearer ${token}` }
-    : {};
-
-  return { headers, userId };
-};
-
 export const getUserSkillsByIdRepo = async (id: string, page: string = "1") => {
-  const authHeaders = await getAuthHeaders();
+  const { headers } = await getAuthSession();
   const res = await fetch(`${getBaseUrl()}/users/${id}/skills?page=${page}`, {
     cache: "no-store",
-    headers: { ...authHeaders },
+    headers: { ...headers },
   });
 
   if (res.status === 404) {
