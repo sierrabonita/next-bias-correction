@@ -3,12 +3,12 @@
 import { revalidatePath } from "next/cache";
 import type { RegisterUserSkillDto } from "@/schemas/userSkillSchema";
 import {
+  createUserSkillService,
   deleteUserSkillService,
-  registerUserSkillService,
 } from "@/services/userSkillService";
 
-export const registerUserSkillAction = async (data: RegisterUserSkillDto) => {
-  const res = await registerUserSkillService(data);
+export const createUserSkillAction = async (data: RegisterUserSkillDto) => {
+  const res = await createUserSkillService(data);
 
   // 一覧画面更新
   revalidatePath("/skills");

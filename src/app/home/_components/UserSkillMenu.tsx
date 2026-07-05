@@ -10,7 +10,7 @@ type Props = {
   userSkillId: string;
 };
 
-export const SkillMenu = (props: Props) => {
+const UserSkillMenu = (props: Props) => {
   const { userSkillId } = props;
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -52,3 +52,5 @@ export const SkillMenu = (props: Props) => {
     </>
   );
 };
+
+export default UserSkillMenu;

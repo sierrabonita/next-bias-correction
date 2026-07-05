@@ -51,7 +51,7 @@ export const getUserSkillsByIdRepo = async (id: string, page: string = "1") => {
   return res.json();
 };
 
-export const registerUserSkillRepo = async (data: RegisterUserSkillDto) => {
+export const createUserSkillRepo = async (data: RegisterUserSkillDto) => {
   const { headers, userId } = await getAuthSession();
 
   const requestBody = {

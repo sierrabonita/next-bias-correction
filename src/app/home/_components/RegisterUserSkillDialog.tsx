@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { getAllSkillsAction } from "@/actions/skillAction";
-import { registerUserSkillAction } from "@/actions/userSkillAction";
+import { createUserSkillAction } from "@/actions/userSkillAction";
 import type { FetchSkill } from "@/schemas/skillSchema";
 import {
   type RegisterUserSkillDto,
@@ -55,7 +55,7 @@ export const RegisterUserSkillDialog = ({ open, onOpenChange }: Props) => {
   const createSkillOptions = useCallback(async () => {
     try {
       const res = await getAllSkillsAction({ excludeLoginUserSkills: true });
-      console.log("res", res);
+
       const skills = res.data.map(
         (item: { id: string | number; name: string; layer: string }) => {
           return { id: Number(item.id), name: item.name, layer: item.layer };
@@ -67,6 +67,7 @@ export const RegisterUserSkillDialog = ({ open, onOpenChange }: Props) => {
         itemToString: (item) => item.name,
         itemToValue: (item) => item.id.toString(),
       });
+
       setSkillListCollection(collection);
     } catch (error) {
       console.error("Data fetching error:", error);
@@ -78,9 +79,7 @@ export const RegisterUserSkillDialog = ({ open, onOpenChange }: Props) => {
   }, [createSkillOptions]);
 
   const onSubmit = async (data: RegisterUserSkillDto) => {
-    console.log("onSubmit", data);
-
-    await registerUserSkillAction(data);
+    await createUserSkillAction(data);
 
     onOpenChange({ open: false });
 

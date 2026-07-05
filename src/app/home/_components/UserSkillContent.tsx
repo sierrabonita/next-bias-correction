@@ -1,5 +1,5 @@
 import { Badge, Box, Heading, HStack, Stack, Text } from "@chakra-ui/react";
-import { SkillMenu } from "@/app/home/_components/SkillMenu";
+import UserSkillMenu from "@/app/home/_components/UserSkillMenu";
 import type { UserSkill, UserSkillData } from "@/types/userSkill";
 import StarRating from "./StarRating";
 
@@ -7,7 +7,7 @@ type Props = {
   userSkill: UserSkill;
 };
 
-const SkillsContent = (props: Props) => {
+const UserSkillContent = (props: Props) => {
   const { userSkill } = props;
   const { data: items } = userSkill;
   const layerColorPalette: Record<UserSkillData["skill"]["layer"], string> = {
@@ -48,7 +48,7 @@ const SkillsContent = (props: Props) => {
                 </Text>
               )}
             </Stack>
-            <SkillMenu userSkillId={item.id} />
+            <UserSkillMenu userSkillId={item.id} />
           </HStack>
         </Box>
       ))}
@@ -59,4 +59,4 @@ const SkillsContent = (props: Props) => {
   );
 };
 
-export default SkillsContent;
+export default UserSkillContent;

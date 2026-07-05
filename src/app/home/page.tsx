@@ -7,8 +7,8 @@ import { authOptions } from "@/lib/auth";
 import { getUserSkillsByIdService } from "@/services/userSkillService";
 import type { UserSkill } from "@/types/userSkill";
 import CollapsibleSidebar from "./_components/CollapsibleSidebar";
-import SkillsContent from "./_components/SkillsContent";
-import SkillsHeader from "./_components/SkillsHeader";
+import SkillsHeader from "./_components/UserSkillHeader";
+import UserSkillContent from "./_components/UserSkillContent";
 
 export const metadata: Metadata = {
   title: "Home | SkillTracker",
@@ -61,7 +61,7 @@ const SkillPage = async ({ searchParams }: Props) => {
         <Stack gap={4}>
           {userSkill ? (
             <>
-              <SkillsContent userSkill={userSkill} />
+              <UserSkillContent userSkill={userSkill} />
               <Pagination meta={userSkill.meta} />
             </>
           ) : (
