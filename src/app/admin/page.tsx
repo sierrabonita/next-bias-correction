@@ -1,6 +1,6 @@
 import { Box, Heading, HStack, Stack, Text } from "@chakra-ui/react";
 import type { Metadata } from "next";
-import CollapsibleSidebar from "@/app/home/_components/CollapsibleSidebar";
+import CollapsibleSidebar from "@/app/_components/CollapsibleSidebar";
 
 export const metadata: Metadata = {
   title: "Admin Home | SkillTracker",

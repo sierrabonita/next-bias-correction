@@ -2,11 +2,11 @@ import { Box, Flex, HStack, Stack, Text } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
+import CollapsibleSidebar from "@/app/_components/CollapsibleSidebar";
 import Pagination from "@/components/Pagination";
 import { authOptions } from "@/lib/auth";
 import { getUserSkillsByIdService } from "@/services/userSkillService";
 import type { UserSkill } from "@/types/userSkill";
-import CollapsibleSidebar from "./_components/CollapsibleSidebar";
 import UserSkillContent from "./_components/UserSkillContent";
 import SkillsHeader from "./_components/UserSkillHeader";
 
