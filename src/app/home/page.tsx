@@ -7,8 +7,8 @@ import { authOptions } from "@/lib/auth";
 import { getUserSkillsByIdService } from "@/services/userSkillService";
 import type { UserSkill } from "@/types/userSkill";
 import CollapsibleSidebar from "./_components/CollapsibleSidebar";
-import SkillsHeader from "./_components/UserSkillHeader";
 import UserSkillContent from "./_components/UserSkillContent";
+import SkillsHeader from "./_components/UserSkillHeader";
 
 export const metadata: Metadata = {
   title: "Home | SkillTracker",
@@ -17,8 +17,7 @@ export const metadata: Metadata = {
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
-
-const SkillPage = async ({ searchParams }: Props) => {
+const HomePage = async ({ searchParams }: Props) => {
   const params = await searchParams;
 
   // 手動入力対策: page指定が複数の場合は最初の値だけを採用する
@@ -73,4 +72,4 @@ const SkillPage = async ({ searchParams }: Props) => {
   );
 };
 
-export default SkillPage;
+export default HomePage;
