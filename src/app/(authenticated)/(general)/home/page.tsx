@@ -1,8 +1,7 @@
-import { Box, Flex, HStack, Stack, Text } from "@chakra-ui/react";
+import { Flex, Stack, Text } from "@chakra-ui/react";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
-import CollapsibleSidebar from "@/app/_components/CollapsibleSidebar";
 import Pagination from "@/components/Pagination";
 import { authOptions } from "@/lib/auth";
 import { getUserSkillsByIdService } from "@/services/userSkillService";
@@ -51,24 +50,21 @@ const HomePage = async ({ searchParams }: Props) => {
   }
 
   return (
-    <HStack alignItems={"start"} gap={0}>
-      <CollapsibleSidebar />
-      <Box flex={1} px={8} py={6} minH={"100vh"}>
-        <Flex justify="space-between" align="center" mb={6}>
-          <SkillsHeader />
-        </Flex>
-        <Stack gap={4}>
-          {userSkill ? (
-            <>
-              <UserSkillContent userSkill={userSkill} />
-              <Pagination meta={userSkill.meta} />
-            </>
-          ) : (
-            <Text>{"データがありません"}</Text>
-          )}
-        </Stack>
-      </Box>
-    </HStack>
+    <>
+      <Flex justify="space-between" align="center" mb={6}>
+        <SkillsHeader />
+      </Flex>
+      <Stack gap={4}>
+        {userSkill ? (
+          <>
+            <UserSkillContent userSkill={userSkill} />
+            <Pagination meta={userSkill.meta} />
+          </>
+        ) : (
+          <Text>{"データがありません"}</Text>
+        )}
+      </Stack>
+    </>
   );
 };
 

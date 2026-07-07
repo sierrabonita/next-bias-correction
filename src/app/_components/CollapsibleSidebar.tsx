@@ -9,7 +9,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import { RxAvatar } from "react-icons/rx";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog";
@@ -44,6 +44,9 @@ const CollapsibleSidebar = () => {
   const sidebarWidth = isOpen
     ? `${WIDE_PANE_WIDTH}px`
     : `${NARROW_PANE_WIDTH}px`;
+
+  const { data: session } = useSession();
+  const role = session?.user?.role;
 
   return (
     <Stack
@@ -92,6 +95,19 @@ const CollapsibleSidebar = () => {
             </ButtonGroup>
           </Stack>
         </Grid>
+        {
+          role === "admin" && null
+          // <ButtonGroup
+          //   orientation={"vertical"}
+          //   align={"start"}
+          //   size={"sm"}
+          //   variant={"plain"}
+          // >
+          //   <Button onClick={() => setIsOpenDialog(true)}>
+          //     {"ログアウト"}
+          //   </Button>
+          // </ButtonGroup>
+        }
       </Stack>
       <ConfirmDialog
         textBody={"ログアウトします。よろしいですか？"}

@@ -1,5 +1,5 @@
 import { Badge, Box, Heading, HStack, Stack, Text } from "@chakra-ui/react";
-import UserSkillMenu from "@/app/home/_components/UserSkillMenu";
+import UserSkillMenu from "@/app/(authenticated)/(general)/home/_components/UserSkillMenu";
 import type { UserSkill, UserSkillData } from "@/types/userSkill";
 import StarRating from "./StarRating";
 

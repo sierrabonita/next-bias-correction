@@ -1,5 +1,5 @@
 import { Heading } from "@chakra-ui/react";
-import { RegisterUserSkillButton } from "@/app/home/_components/RegisterUserSkillButton";
+import { RegisterUserSkillButton } from "@/app/(authenticated)/(general)/home/_components/RegisterUserSkillButton";
 
 const UserSkillHeader = () => {
   return (
