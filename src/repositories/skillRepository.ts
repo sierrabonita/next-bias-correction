@@ -1,6 +1,6 @@
 import { InfrastructureError } from "@/errors/InfrastructureError";
 import { getAuthSession } from "@/repositories/utils/session";
-import type { CreateSkillDto } from "@/schemas/skillSchema";
+import type { CreateSkillDto, FetchSkill } from "@/schemas/skillSchema";
 
 const getBaseUrl = () => {
   const baseUrl = process.env.API_BASE_URL;
@@ -14,7 +14,7 @@ export const getSkillsRepo = async ({
   excludeLoginUserSkills = false,
 }: {
   excludeLoginUserSkills?: boolean;
-} = {}) => {
+} = {}): Promise<{ data: FetchSkill[] }> => {
   const { headers, userId } = await getAuthSession();
 
   const url = `${getBaseUrl()}/skills`;

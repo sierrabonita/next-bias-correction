@@ -3,13 +3,13 @@ import {
   deleteSkillRepo,
   getSkillsRepo,
 } from "@/repositories/skillRepository";
-import type { CreateSkillDto } from "@/schemas/skillSchema";
+import type { CreateSkillDto, FetchSkill } from "@/schemas/skillSchema";
 
 export const getAllSkillsService = async ({
   excludeLoginUserSkills = false,
 }: {
   excludeLoginUserSkills?: boolean;
-} = {}) => {
+} = {}): Promise<{ data: FetchSkill[] }> => {
   return await getSkillsRepo({ excludeLoginUserSkills });
 };
 
