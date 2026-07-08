@@ -9,8 +9,10 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
+import { RiAdminFill } from "react-icons/ri";
 import { RxAvatar } from "react-icons/rx";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog";
 
@@ -23,6 +25,7 @@ const NARROW_PANE_WIDTH = ICON_BUTTON_SIZE + PANE_PADDING_SCALE * 4 * 2;
 const TRANSITION_BASE = "0.2s cubic-bezier(0.4, 0, 0.2, 1)";
 
 const CollapsibleSidebar = () => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -95,19 +98,47 @@ const CollapsibleSidebar = () => {
             </ButtonGroup>
           </Stack>
         </Grid>
-        {
-          role === "admin" && null
-          // <ButtonGroup
-          //   orientation={"vertical"}
-          //   align={"start"}
-          //   size={"sm"}
-          //   variant={"plain"}
-          // >
-          //   <Button onClick={() => setIsOpenDialog(true)}>
-          //     {"ログアウト"}
-          //   </Button>
-          // </ButtonGroup>
-        }
+        {role === "admin" && (
+          <>
+            <HStack h={`${ICON_BUTTON_SIZE}px`} overflow={"hidden"}>
+              <IconButton
+                size={"lg"}
+                variant="plain"
+                aria-label="管理者向けページ"
+                onClick={handleClick}
+              >
+                <RiAdminFill
+                  style={{ width: `${ICON_SIZE}px`, height: `${ICON_SIZE}px` }}
+                />
+              </IconButton>
+              <Grid
+                gridTemplateColumns={isOpen ? "1fr" : "0fr"}
+                transition={`grid-template-columns ${TRANSITION_BASE}, opacity ${TRANSITION_BASE}`}
+              >
+                <Text overflow={"hidden"} textWrap={"nowrap"}>
+                  {"管理者向けページ"}
+                </Text>
+              </Grid>
+            </HStack>
+            <Grid
+              gridTemplateRows={isOpen ? "1fr" : "0fr"}
+              transition={`grid-template-rows ${TRANSITION_BASE}`}
+            >
+              <Stack overflow="hidden">
+                <ButtonGroup
+                  orientation={"vertical"}
+                  align={"start"}
+                  size={"sm"}
+                  variant={"plain"}
+                >
+                  <Button onClick={() => router.push("/skill")}>
+                    {"スキル管理"}
+                  </Button>
+                </ButtonGroup>
+              </Stack>
+            </Grid>
+          </>
+        )}
       </Stack>
       <ConfirmDialog
         textBody={"ログアウトします。よろしいですか？"}
